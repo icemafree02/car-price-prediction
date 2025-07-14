@@ -57,118 +57,121 @@ with st.form("input_form"):
     submit = st.form_submit_button("Predict Selling Price", use_container_width=True)
 
 if submit:
-    try:
-        age = 2025 - year
+    if not name.strip():
+        st.warning("Please enter the car name !!.")
+    else:
+        try:
+            age = 2025 - year
 
-        if age <= 3:
-            age_category_code = 1  # recent
-            age_category = "Recent"
-        elif age <= 10:
-            age_category_code = 0  # old
-            age_category = "Old"
-        else:
-            age_category_code = 2  # very old
-            age_category = "Very Old"
-
-        if fuel.lower() == "diesel":
-            if Mileage >= 20:
-                fuel_efficiency_code = 1
-            elif Mileage >= 15:
-                fuel_efficiency_code = 0
+            if age <= 3:
+                age_category_code = 1  # recent
+                age_category = "Recent"
+            elif age <= 10:
+                age_category_code = 0  # old
+                age_category = "Old"
             else:
-                fuel_efficiency_code = 2
-        elif fuel.lower() == "petrol":
-            if Mileage >= 17:
-                fuel_efficiency_code = 1
-            elif Mileage >= 13:
-                fuel_efficiency_code = 0
-            else:
-                fuel_efficiency_code = 2
-        else:  # CNG, LPG, Electric
-            if Mileage >= 20:
-                fuel_efficiency_code = 1
-            elif Mileage >= 15:
-                fuel_efficiency_code = 0
-            else:
-                fuel_efficiency_code = 2
+                age_category_code = 2  # very old
+                age_category = "Very Old"
 
-        fuel_mapping = {"Petrol": 4, "Diesel": 1, "CNG": 0, "LPG": 3, "Electric": 2}
-        seller_mapping = {"Dealer": 0, "Individual": 1, "Trustmark Dealer": 2}
-        transmission_mapping = {"Manual": 1, "Automatic": 0}
-        owner_mapping = {
-            "First Owner": 0,
-            "Second Owner": 2,
-            "Third Owner": 4,
-            "Fourth & Above Owner": 1,
-            "Test Drive Car": 3,
-        }
-        brand_mapping = {
-            "Maruti": 20, "Skoda": 27, "Honda": 10, "Hyundai": 11, "Toyota": 29, "Ford": 9,
-            "Renault": 26, "Mahindra": 19, "Tata": 28, "Chevrolet": 4, "Fiat": 7, "Datsun": 6,
-            "Jeep": 14, "Mercedes-Benz": 21, "Mitsubishi": 22, "Audi": 2, "Volkswagen": 30,
-            "BMW": 3, "Nissan": 23, "Lexus": 17, "Jaguar": 13, "Land": 16, "MG": 18, "Volvo": 31,
-            "Daewoo": 5, "Kia": 15, "Force": 8, "Ambassador": 0, "Ashok": 1, "Isuzu": 12,
-            "Opel": 24, "Peugeot": 25
-        }
+            if fuel.lower() == "diesel":
+                if Mileage >= 20:
+                    fuel_efficiency_code = 1
+                elif Mileage >= 15:
+                    fuel_efficiency_code = 0
+                else:
+                    fuel_efficiency_code = 2
+            elif fuel.lower() == "petrol":
+                if Mileage >= 17:
+                    fuel_efficiency_code = 1
+                elif Mileage >= 13:
+                    fuel_efficiency_code = 0
+                else:
+                    fuel_efficiency_code = 2
+            else:  # CNG, LPG, Electric
+                if Mileage >= 20:
+                    fuel_efficiency_code = 1
+                elif Mileage >= 15:
+                    fuel_efficiency_code = 0
+                else:
+                    fuel_efficiency_code = 2
 
-        input_data = np.array([[
-            year,
-            km_driven,
-            fuel_mapping[fuel],
-            seller_mapping[seller_type],
-            transmission_mapping[transmission],
-            owner_mapping[owner],
-            Mileage,
-            engine,
-            max_power,
-            Seats,
-            age,
-            brand_mapping[brand],
-            int(is_popular),
-            int(is_luxury),
-            int(high_mileage),
-            age_category_code,
-            fuel_efficiency_code
-        ]])
+            fuel_mapping = {"Petrol": 4, "Diesel": 1, "CNG": 0, "LPG": 3, "Electric": 2}
+            seller_mapping = {"Dealer": 0, "Individual": 1, "Trustmark Dealer": 2}
+            transmission_mapping = {"Manual": 1, "Automatic": 0}
+            owner_mapping = {
+                "First Owner": 0,
+                "Second Owner": 2,
+                "Third Owner": 4,
+                "Fourth & Above Owner": 1,
+                "Test Drive Car": 3,
+            }
+            brand_mapping = {
+                "Maruti": 20, "Skoda": 27, "Honda": 10, "Hyundai": 11, "Toyota": 29, "Ford": 9,
+                "Renault": 26, "Mahindra": 19, "Tata": 28, "Chevrolet": 4, "Fiat": 7, "Datsun": 6,
+                "Jeep": 14, "Mercedes-Benz": 21, "Mitsubishi": 22, "Audi": 2, "Volkswagen": 30,
+                "BMW": 3, "Nissan": 23, "Lexus": 17, "Jaguar": 13, "Land": 16, "MG": 18, "Volvo": 31,
+                "Daewoo": 5, "Kia": 15, "Force": 8, "Ambassador": 0, "Ashok": 1, "Isuzu": 12,
+                "Opel": 24, "Peugeot": 25
+            }
 
-        prediction = model.predict(input_data)[0]
+            input_data = np.array([[
+                year,
+                km_driven,
+                fuel_mapping[fuel],
+                seller_mapping[seller_type],
+                transmission_mapping[transmission],
+                owner_mapping[owner],
+                Mileage,
+                engine,
+                max_power,
+                Seats,
+                age,
+                brand_mapping[brand],
+                int(is_popular),
+                int(is_luxury),
+                int(high_mileage),
+                age_category_code,
+                fuel_efficiency_code
+            ]])
 
-        st.success(f"Estimated Selling Price: {int(prediction):,}")
+            prediction = model.predict(input_data)[0]
 
-        # Confidence
-        confidence = "High"
-        if age > 15 or km_driven > 200000:
-            confidence = "Medium"
-        if age > 20 or km_driven > 300000:
-            confidence = "Low"
-        st.info(f"**Prediction Confidence:** {confidence}")
+            st.success(f"Estimated Selling Price: {int(prediction):,}")
 
-        # Input summary
-        with st.expander("Input Summary"):
-            col1, col2 = st.columns(2)
-            with col1:
-                st.write(f"**Car:** {name}")
-                st.write(f"**Brand:** {brand}")
-                st.write(f"**Year:** {year}")
-                st.write(f"**Age:** {age} years ({age_category})")
-                st.write(f"**Kilometers Driven:** {km_driven:,}")
-                st.write(f"**Fuel:** {fuel}")
-            with col2:
-                st.write(f"**Seller Type:** {seller_type}")
-                st.write(f"**Transmission:** {transmission}")
-                st.write(f"**Owner:** {owner}")
-                st.write(f"**Popular Model:** {'Yes' if is_popular else 'No'}")
-                st.write(f"**Luxury Car:** {'Yes' if is_luxury else 'No'}")
-                st.write(f"**High Mileage:** {'Yes' if high_mileage else 'No'}")
+            # Confidence
+            confidence = "High"
+            if age > 15 or km_driven > 200000:
+                confidence = "Medium"
+            if age > 20 or km_driven > 300000:
+                confidence = "Low"
+            st.info(f"**Prediction Confidence:** {confidence}")
 
-        st.markdown("---")
-        lower = int(prediction * 0.85)
-        upper = int(prediction * 1.15)
-        st.write(f"** Price Range Estimation:**{lower:,} – {upper:,}")
+            # Input summary
+            with st.expander("Input Summary"):
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write(f"**Car:** {name}")
+                    st.write(f"**Brand:** {brand}")
+                    st.write(f"**Year:** {year}")
+                    st.write(f"**Age:** {age} years ({age_category})")
+                    st.write(f"**Kilometers Driven:** {km_driven:,}")
+                    st.write(f"**Fuel:** {fuel}")
+                with col2:
+                    st.write(f"**Seller Type:** {seller_type}")
+                    st.write(f"**Transmission:** {transmission}")
+                    st.write(f"**Owner:** {owner}")
+                    st.write(f"**Popular Model:** {'Yes' if is_popular else 'No'}")
+                    st.write(f"**Luxury Car:** {'Yes' if is_luxury else 'No'}")
+                    st.write(f"**High Mileage:** {'Yes' if high_mileage else 'No'}")
 
-    except Exception as e:
-        st.error(f" Error: {str(e)}")
-        st.info("Please check that all required fields are filled properly.")
+            st.markdown("---")
+            lower = int(prediction * 0.85)
+            upper = int(prediction * 1.15)
+            st.write(f"** Price Range Estimation:**{lower:,} – {upper:,}")
+
+        except Exception as e:
+            st.error(f" Error: {str(e)}")
+            st.info("Please check that all required fields are filled properly.")
 
 st.markdown("---")
 st.markdown(
