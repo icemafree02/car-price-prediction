@@ -2,7 +2,6 @@ import streamlit as st
 import joblib
 import numpy as np
 
-# Load model
 @st.cache_resource
 def load_model():
     return joblib.load("xgboost_car_price_model.pkl")
@@ -59,10 +58,8 @@ with st.form("input_form"):
 
 if submit:
     try:
-        # Age calculation
         age = 2025 - year
 
-        # Age category
         if age <= 3:
             age_category_code = 1  # recent
             age_category = "Recent"
@@ -73,7 +70,6 @@ if submit:
             age_category_code = 2  # very old
             age_category = "Very Old"
 
-        # Fuel efficiency classification
         if fuel.lower() == "diesel":
             if Mileage >= 20:
                 fuel_efficiency_code = 1
@@ -96,7 +92,6 @@ if submit:
             else:
                 fuel_efficiency_code = 2
 
-        # Encodings
         fuel_mapping = {"Petrol": 4, "Diesel": 1, "CNG": 0, "LPG": 3, "Electric": 2}
         seller_mapping = {"Dealer": 0, "Individual": 1, "Trustmark Dealer": 2}
         transmission_mapping = {"Manual": 1, "Automatic": 0}
@@ -138,7 +133,6 @@ if submit:
 
         prediction = model.predict(input_data)[0]
 
-        # Display results
         st.success(f"Estimated Selling Price: {int(prediction):,}")
 
         # Confidence
@@ -167,7 +161,6 @@ if submit:
                 st.write(f"**Luxury Car:** {'Yes' if is_luxury else 'No'}")
                 st.write(f"**High Mileage:** {'Yes' if high_mileage else 'No'}")
 
-        # Estimated price range
         st.markdown("---")
         lower = int(prediction * 0.85)
         upper = int(prediction * 1.15)
@@ -177,7 +170,6 @@ if submit:
         st.error(f" Error: {str(e)}")
         st.info("Please check that all required fields are filled properly.")
 
-# Footer
 st.markdown("---")
 st.markdown(
     "*Disclaimer: This prediction is based on historical data and may not reflect actual market prices.*"
