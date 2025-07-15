@@ -105,3 +105,40 @@ XGBoost handles complex patterns and interactions effectively and provides the *
   - Model ensembling or stacking techniques
 
 ---
+## Run Locally 
+
+- Initialize git
+git init
+- Clone the project
+git clone
+- Enter project directory
+cd Streamlit_Predict
+- Install the package in requirements.txt
+- Start the Streamlit locally
+Streamlit run car_predict.py
+
+---
+## Explore the notebook
+To explore the notebook file click here 
+For the Streamlit deployment click here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
