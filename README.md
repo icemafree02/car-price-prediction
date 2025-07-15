@@ -1,33 +1,46 @@
-# car-price-prediction
-Car price prediction project using Regression and Tree-based model 
------------------
-# key findings : Car price prediction base on age of car, year, released km-driven etc. Give the predicion result for best decision in purchase car.
------------------
-# Business Problem
-This app predicts the car price that based on information and usage of specific car. When the dealer or individual person want to sell the car, they can input the information and predict the price approximate the real price in the market. This app can be used by the individual or dealer who wants to sell car or making decision.
------------------
-# Data Source
-https://www.kaggle.com/code/mohaiminul101/car-price-prediction
------------------
-# Method
-- Exploratory Data Analysis
-- Data Transformation
-- Data Preparation
-- Model Training
-- Model Evaluation
------------------
-# Tech Stack
-- Python (requirements.txt is used in this project)
-- Streamlit (interface for model)
-------------------
-# Quick Glance at result
-Correlation between features
-<img width="832" height="735" alt="image" src="https://github.com/user-attachments/assets/2c70c636-99f3-47df-9ef4-f252a6363ad5" />
-Features Importance
-<img width="946" height="611" alt="image" src="https://github.com/user-attachments/assets/0fe24b72-a9ab-4a58-8e38-0e0ea9536bf8" />
-Actual vs Predicted of XGBoost
-<img width="790" height="590" alt="image" src="https://github.com/user-attachments/assets/b7c2a52c-7c9c-4179-9529-7f113f464d59" />
-Model evaluation
+# 🚗 Car Price Prediction
+
+A machine learning project for predicting used car prices using **regression** and **tree-based models**.
+
+---
+
+## 🔍 Key Findings
+
+Car price prediction is based on features such as **manufacturing year**, **car age**, **kilometers driven**, and more. This helps users — whether buyers, sellers, or dealers — make informed decisions by estimating a fair market value for any car.
+
+---
+
+## 🧩 Business Problem
+
+Determining the right price for a used car can be challenging due to the influence of multiple variables. This application allows **dealers** and **individual sellers** to input a car’s details and receive an estimated selling price that's closely aligned with **actual market trends**. It helps prevent underpricing or overpricing, making it useful for both pricing and negotiation purposes.
+
+---
+
+## 📁 Data Source
+
+Dataset from Kaggle:  
+🔗 [Car Price Prediction Dataset](https://www.kaggle.com/code/mohaiminul101/car-price-prediction)
+
+---
+
+## ⚙️ Methodology
+
+- 📊 Exploratory Data Analysis (EDA)  
+- 🔧 Data Transformation  
+- 🧹 Data Preparation  
+- 🧠 Model Training  
+- 📈 Model Evaluation  
+
+---
+
+## 🛠️ Tech Stack
+
+- **Python** (dependencies managed via `requirements.txt`)  
+- **Streamlit** (used for interactive web interface)  
+
+---
+
+## 📈 Model Performance
 
 | Model              | Train R² | Test R² |     MAE     |    RMSE     |
 |--------------------|----------|---------|-------------|-------------|
@@ -36,25 +49,59 @@ Model evaluation
 | Lasso Regression   | 0.747    | 0.736   | 113,404.94  | 154,842.57  |
 | Random Forest      | 0.973    | 0.886   | 66,799.70   | 101,696.78  |
 | Gradient Boosting  | 0.966    | 0.895   | 64,583.00   | 97,784.77   |
-| XGBoost            | 0.962    | 0.896   | 64,576.10   | 97,150.58   |
+| **XGBoost**        | 0.962    | **0.896** | **64,576.10** | **97,150.58** |
 
-- The best model for prediction : XGBoost
-- Why choose XGBoost as model prediction
-    - Cars are rapidly depreciating assets. Every year, manufacturers introduce new models with advanced technologies, which significantly reduces the value of older car. Additionally, several factors contribute to the decline in a car's resale price — such as kilometers driven, age of the car, and the number of previous owners. These variables make it difficult to set an appropriate selling price. To sell a car effectively, it's crucial to ensure that the listed price is neither too high nor too low, but instead aligned with market expectations. Choosing the best model for price prediction helps estimate a selling price that closely reflects the true market value, ensuring fairness for both buyers and sellers.
- 
-Conclusion : In our case, choosing the XGBoost for car price prediction is ideal.
-----------------------------
-# Lessons Learned and Recommendations
-- During the analysis phase of this project, we identified outliers that significantly skewed the model’s performance and distorted summary statistics across several variables. One major source of these outliers came from luxury brands such as BMW and Mercedes-Benz, which tend to retain high resale value despite high mileage or age — unlike most standard car brands. However, removing all outliers would result in the loss of valuable data related to the luxury segment, which is crucial for a well-rounded prediction model. Therefore, instead of dropping all high-priced or unusual records, we adopted a balanced approach:
+---
 
-    - Retain moderate outliers that reflect real-world behavior (e.g., older luxury cars still selling at high prices).
+## 🏆 Best Model: **XGBoost**
 
-    - Remove extreme outliers that heavily skew the model and are statistically inconsistent with typical trends.
+### Why XGBoost?
 
-- we found out the most important features: year and max_power (bhp) are the most effective the model performance features to prediction the price, also the is_luxury, engine (CC), is_popular are useful, the least useful is transmission.
-- Recommendation would be to focus on the reasonable outliers and effective features.
------------------------------
-# Limitaion and Things that can be improved
-- Dataset: The improvement for model would be to gain more data (currently have 8128 row and 13 columns) for the most effective and precision predict price.
-- Model: The model for prediction was only 6 models, The best way for reaching the precise price is try more model and improve the hyperparameter tuning.
+Cars are rapidly depreciating assets. Each year, new models with advanced technologies reduce the value of older vehicles. Additionally, factors like **kilometers driven**, **ownership history**, and **engine power** greatly affect the resale price.
 
+XGBoost handles complex patterns and interactions effectively and provides the **best performance** across all evaluation metrics — making it the most suitable model for predicting car prices accurately.
+
+---
+
+## 📌 Visual Insights
+
+### 🔗 Correlation Between Features  
+![Correlation Matrix](https://github.com/user-attachments/assets/2c70c636-99f3-47df-9ef4-f252a6363ad5)
+
+### 🔍 Feature Importance  
+![Feature Importance](https://github.com/user-attachments/assets/0fe24b72-a9ab-4a58-8e38-0e0ea9536bf8)
+
+### 🎯 Actual vs Predicted (XGBoost)  
+![Actual vs Predicted](https://github.com/user-attachments/assets/b7c2a52c-7c9c-4179-9529-7f113f464d59)
+
+---
+
+## 🎓 Lessons Learned & Recommendations
+
+- **Outlier Handling**:  
+  Outliers — particularly from **luxury brands** like BMW and Mercedes-Benz — were found to **skew model performance**. These brands retain high resale value even when the cars are older or have high mileage.
+
+  ✅ Strategy:  
+  - **Kept moderate outliers** that reflect realistic luxury vehicle behavior  
+  - **Removed extreme outliers** that significantly distorted the model
+
+- **Key Features**:
+  - Most important: `year`, `max_power (bhp)`, `is_luxury`, `engine (CC)`, `is_popular`
+  - Least impactful: `transmission`
+
+📌 **Recommendation**: Focus on meaningful features and carefully manage outliers for better predictions.
+
+---
+
+## ⚠️ Limitations & Future Improvements
+
+- **Dataset Size**:  
+  The dataset contains **8,128 rows** and **13 columns**. Expanding the dataset could improve model robustness and performance.
+
+- **Model Variety**:  
+  Only 6 models were tested. Future work can include:
+  - More algorithms (e.g., CatBoost, LightGBM, deep learning models)
+  - Advanced hyperparameter tuning
+  - Model ensembling or stacking techniques
+
+---
