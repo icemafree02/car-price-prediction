@@ -105,22 +105,47 @@ XGBoost handles complex patterns and interactions effectively and provides the *
   - Model ensembling or stacking techniques
 
 ---
-## Run Locally 
 
-- Initialize git
-git init
-- Clone the project
-git clone
-- Enter project directory
-cd Streamlit_Predict
-- Install the package in requirements.txt
-- Start the Streamlit locally
-Streamlit run car_predict.py
+## 🚀 Run Locally
+
+To run this project on your local machine:
+
+1. **Initialize Git (if not already done)**  
+   ```bash
+   git init
+   ```
+
+2. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/icemafree02/car-price-prediction.git
+   ```
+
+3. **Navigate to the Project Directory**  
+   ```bash
+   cd car-price-prediction
+   ```
+
+4. **Install Required Packages**  
+   Make sure you have Python installed, then run:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Start the Streamlit App**  
+   ```bash
+   streamlit run car_predict.py
+   ```
 
 ---
-## Explore the notebook
-To explore the notebook file click here 
-For the Streamlit deployment click here
+
+## 📓 Explore the Notebook
+
+- 📘 [Click here to view the Jupyter Notebook](https://github.com/icemafree02/car-price-prediction/blob/main/Car_Price_Prediction.ipynb) for full exploratory analysis and model development.
+
+- 🌐 [Click here to try the Streamlit App live](https://car-price-prediction-xarvwfwdoyrz9fgurdqjj5.streamlit.app/)
+
+---
+
 
 
 
